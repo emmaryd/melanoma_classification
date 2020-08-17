@@ -1,5 +1,6 @@
 # melanoma_classification
-Classification of malignt vs benignt melanoma using the ISIC 2020 Challenge Dataset.
+Classification of malignt vs benignt melanoma using the ISIC 2020 Challenge Dataset, https://doi.org/10.34970/2020-ds01 (c) by ISDIS, 2020.
+This Dataset can be found and downloaded at [https://www.kaggle.com/c/siim-isic-melanoma-classification/data].
 
 ## How to run:
 The original images needs to be resized to reduce the computational time, this is done with `resize_images.py`, the images can be reduced to desired shape.
