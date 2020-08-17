@@ -18,4 +18,3 @@ def resize_from_dir(src, dest, shape=(256,256)):
 
 if __name__ == "__main__": 
     resize_from_dir(*sys.argv[1:])  
-    #resize_from_dir(sys.argv[1], sys.argv[2])

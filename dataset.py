@@ -4,12 +4,11 @@ import torch
 from torch.utils.data import Dataset
 from torchvision import transforms, utils
 
-
-
 class MelanomaDataset(Dataset):
-    """Melanoma dataset."""
+    """Creates the Melanoma dataset. This is a subclass of the torch.utils.data.Dataset module,
+    the MelanomaDataset is is modified to fit the ISIC 2020 Challenge dataset."""
 
-    def __init__(self, dataframe, root_dir, transform=None, train=True):
+    def __init__(self, dataframe, root_dir, transform=None):
         """
         Args:
             dataframe: Contains the image names at column 'image_name' and target label at 'target', 
@@ -55,8 +54,12 @@ class MelanomaDataset(Dataset):
         return sample
 
 class MelanomaTestDataset(MelanomaDataset):
+    """
+    Creates the Melanoma test-dataset. This is a subclass of MelanomaDataset,
+    with modified __getitem__, since the test-data does not have a target.
+    """
+    
     def __getitem__(self, idx):
-        
         #get image
         img_name = f'{self.root_dir}/{self.melanoma_df.iloc[idx, 0]}.jpg'        
         image = Image.open(img_name)

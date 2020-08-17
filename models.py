@@ -5,7 +5,7 @@ import torchvision.models as models
 
 class ResnetModel(nn.Module):
     """
-    This class creates a pretrained resnet50 model. Input should be a 224x224x3 image (image) and
+    This class creates a pre-trained resnet50 model. Input should be a 224x224x3 image (image) and
     a tensor meta data containing the meta data.
     It returns a prediction of the probability that the input belongs to class 1 (malignt).
     """

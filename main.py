@@ -7,13 +7,13 @@ import torch
 from torchvision.transforms import (Compose, ToTensor, Normalize,  CenterCrop, 
                                     RandomHorizontalFlip, RandomVerticalFlip, RandomPerspective)
 from torch.utils.data import DataLoader
-#from torchvision import transforms, utils
-#from torchvision.transforms.functional import to_tensor, to_pil_image
 from torch import optim, nn
 from train_epoch import train_epoch
 import sys
 
 def main(model_type='resnet', n_epochs = 20, lr = 0.0005, batch_size=32):
+
+    """ the main function """
 
     train_img_path = '/../Users/emmarydholm/Documents/code/melanoma_classification/data_added_melanoma/train/train_resized' #'/data/train_resized/' #path to directory containing resized train image
     test_img_path = '/../Users/emmarydholm/Documents/code/melanoma_classification/data_added_melanoma/test/test_resized' #'/data/test_resized/' #path to directory containing resized train image
