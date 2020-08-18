@@ -14,25 +14,24 @@ import sys
 def main(model_type='resnet', n_epochs = 20, lr = 0.0005, batch_size=32):
 
     """ the main function """
-
+    #set file paths
     train_img_path = '/data/train_resized/' #path to directory containing resized train image
     test_img_path = '/data/test_resized/' #path to directory containing resized train image
     data_train = pd.read_csv('data/train_processed.csv') #path to directory containing processed csv file for train data
     data_test = pd.read_csv('data/test_processed.csv') #path to directory containing processed csv file for test data
-
+    
+    #split data_train into train and validation
     n_data_train = len(data_train) 
-
     split = int(0.2 * n_data_train)
-
     data_train, data_valid  = data_train.iloc[split :], data_train.iloc[0 : split]
 
-    # Transformation for test and validation data
+    #transformation for test and validation data
     transform_valid = Compose([CenterCrop(224), # Crops the center so the resulting image shape is 224x224x3, input image shape could be for example 256x256x3
                                ToTensor(),
                                Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
                               ])
 
-    #Augmentations for the training data
+    #augmentations for the training data
     transform_train = Compose([CenterCrop(224),
                                 RandomPerspective(distortion_scale=0.5, p=0.5, interpolation=3, fill=0),
                                 RandomVerticalFlip(p=0.5),
@@ -41,12 +40,12 @@ def main(model_type='resnet', n_epochs = 20, lr = 0.0005, batch_size=32):
                                 Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
                               ])
 
-    # Split train set into train and validation
+    #create the datasets
     dataset_train = MelanomaDataset(data_train, train_img_path, transform=transform_train) 
     dataset_valid = MelanomaDataset(data_valid, train_img_path, transform=transform_valid)
     dataset_test = MelanomaTestDataset(data_test, test_img_path, transform=transform_valid)
 
-    # Create the batches with dataloader
+    #create the batches with dataloader
     training_loader =  DataLoader(dataset_train, batch_size=batch_size, shuffle=True)
     validation_loader = DataLoader(dataset_valid, batch_size=batch_size, shuffle=True)
     #test_loader = DataLoader(dataset_test, batch_size=32, shuffle=False)
@@ -78,7 +77,7 @@ def main(model_type='resnet', n_epochs = 20, lr = 0.0005, batch_size=32):
 
     model = model.to(device)
 
-    # define loss function
+    #define loss function
     loss_function = torch.nn.BCEWithLogitsLoss()
 
     #define optimizer
@@ -92,7 +91,8 @@ def main(model_type='resnet', n_epochs = 20, lr = 0.0005, batch_size=32):
     train_auc = []
     val_auc = []
     best_auc = 0.0
-
+    
+    #training loop
     for i in range(n_epochs):
         t1, v1, t_auc, v_auc = train_epoch(training_loader, 
                                             validation_loader, 
@@ -117,7 +117,7 @@ def main(model_type='resnet', n_epochs = 20, lr = 0.0005, batch_size=32):
             best_auc = v_auc
             print('model saved')
             
-
+    #plot the result
     epochs = np.arange(n_epochs)
     fig, ax = plt.subplots()
     ax.set_title('Training and Validation losses')
