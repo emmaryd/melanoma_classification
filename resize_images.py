@@ -2,6 +2,7 @@ import os
 from PIL import Image
 import sys
 from tqdm import tqdm
+
 def resize_from_dir(src, dest, shape=(256,256)):
     """
     Resizes the images in the source directory "scr" to size=(256,256).
