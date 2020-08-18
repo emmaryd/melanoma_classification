@@ -9,9 +9,9 @@ def prepare_data():
     about the train and test sets respectively and duplicates_csv is a file containing the duplicates.
     Two new csv files will be created: data/train_processed.csv and data/test_processed.csv
     """
-    train_csv = "/Users/emmarydholm/Documents/code/melanoma_classification/melanoma_classification/data/train.csv"
-    test_csv =  "/Users/emmarydholm/Documents/code/melanoma_classification/melanoma_classification/data/test.csv"
-    duplicates_csv = "/Users/emmarydholm/Documents/code/melanoma_classification/melanoma_classification/data/duplicates.csv"
+    train_csv = "/data/train.csv" #original train.csv file
+    test_csv =  "/data/test.csv" #original test.csv file
+    duplicates_csv = "/data/duplicates.csv" #file containing the duplicates in the data
     train_set = pd.read_csv(train_csv)
     test_set = pd.read_csv(test_csv)
 
