@@ -15,8 +15,8 @@ def main(model_type='resnet', n_epochs = 20, lr = 0.0005, batch_size=32):
 
     """ the main function """
 
-    train_img_path = '/../Users/emmarydholm/Documents/code/melanoma_classification/data_added_melanoma/train/train_resized' #'/data/train_resized/' #path to directory containing resized train image
-    test_img_path = '/../Users/emmarydholm/Documents/code/melanoma_classification/data_added_melanoma/test/test_resized' #'/data/test_resized/' #path to directory containing resized train image
+    train_img_path = '/data/train_resized/' #path to directory containing resized train image
+    test_img_path = '/data/test_resized/' #path to directory containing resized train image
     data_train = pd.read_csv('data/train_processed.csv') #path to directory containing processed csv file for train data
     data_test = pd.read_csv('data/test_processed.csv') #path to directory containing processed csv file for test data
 
@@ -27,7 +27,7 @@ def main(model_type='resnet', n_epochs = 20, lr = 0.0005, batch_size=32):
     data_train, data_valid  = data_train.iloc[split :], data_train.iloc[0 : split]
 
     # Transformation for test and validation data
-    transform_valid = Compose([CenterCrop(224),
+    transform_valid = Compose([CenterCrop(224), # Crops the center so the resulting image shape is 224x224x3, input image shape could be for example 256x256x3
                                ToTensor(),
                                Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
                               ])
