@@ -1,5 +1,5 @@
 # melanoma_classification
-Classification of malignt vs benignt melanoma using the ISIC 2020 Challenge Dataset, https://doi.org/10.34970/2020-ds01 (c) by ISDIS, 2020.
+Classification of malignt vs benignt melanoma using deep learning, on the ISIC 2020 Challenge Dataset, https://doi.org/10.34970/2020-ds01 (c) by ISDIS, 2020.
 This Dataset can be found and downloaded at [https://www.kaggle.com/c/siim-isic-melanoma-classification/data].
 
 ## How to run:
