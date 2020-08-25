@@ -1,30 +1,34 @@
-import pandas as pd
-from preprocess import normalize_age, one_hot_encoding_anatomic_site, one_hot_encoding_sex
 import sys
+import pandas as pd
+from preprocess import standardise_age, one_hot_encoding_anatomic_site, one_hot_encoding_sex
 
-def prepare_data():
+def prepare_data(train_csv, test_csv, duplicates_csv):
     """
-    Prepares the data.  Using the functions in preprocess.py.
-    train_csv, test_csv should be file paths to the original csv files containing information 
-    about the train and test sets respectively and duplicates_csv is a file containing the duplicates.
-    Two new csv files will be created: data/train_processed.csv and data/test_processed.csv
+    Prepares the data using the functions in preprocess.py.
+
+    Args:
+        train_csv: A string that gives the filepath to the original train_csv file described in 
+            README.md.
+        test_csv: A string that gives the filepath to the original test_csv file described in 
+            README.md.
+        duplicates_csv: A string that gives the filepath to the file that contains the duplicates in 
+            the train_csv.
+    
+    Returns:
+        Two new csv files is created: data/train_processed.csv and data/test_processed.csv
     """
-    train_csv = "/data/train.csv" #original train.csv file
-    test_csv =  "/data/test.csv" #original test.csv file
-    duplicates_csv = "/data/duplicates.csv" #file containing the duplicates in the data
+    # Read the csv files and remove duplicates
     train_set = pd.read_csv(train_csv)
     test_set = pd.read_csv(test_csv)
-
-    # the train set contains some duplicates these are to be removed before training
     duplicates = pd.read_csv(duplicates_csv)
     train_set = train_set[~train_set['image_name'].isin(duplicates['ISIC_id'])]
 
-    train_set = normalize_age(train_set)
-    train_set['age_approx'] = train_set['age_approx'].fillna(0) # Fill NaNs with 0 ( the mean after normalization )
+    train_set = standardise_age(train_set)
+    train_set['age_approx'] = train_set['age_approx'].fillna(0) # Fill NaNs with 0 (the mean)
     train_set = one_hot_encoding_anatomic_site(train_set)
     train_set = one_hot_encoding_sex(train_set)
 
-    test_set = normalize_age(test_set)
+    test_set = standardise_age(test_set)
     test_set = one_hot_encoding_anatomic_site(test_set)
     test_set = one_hot_encoding_sex(test_set)
 
@@ -33,5 +37,5 @@ def prepare_data():
 
 
 if __name__ == '__main__':
-    prepare_data()
+    prepare_data(*sys.argv[1:])
  
